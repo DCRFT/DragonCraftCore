@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import pl.dcrft.Managers.KitsManager;
@@ -19,19 +20,32 @@ public class InventoryClickListener implements Listener {
     public void onInventoryClick(InventoryClickEvent e) {
         String title = e.getView().getTitle();
         if (title.contains(LanguageManager.getMessage("statistics.title"))) {
+            if(e.getClickedInventory().getType() == InventoryType.PLAYER){
+                return;
+            }
             e.setCancelled(true);
             if (e.getCurrentItem() != null) {
-                String target = title.replaceAll(LanguageManager.getMessage("statistics.title"), "");
+                if(!e.getCurrentItem().getEnchantments().isEmpty()) return;
+                Player p = (Player) e.getWhoClicked();
                 switch (e.getCurrentItem().getType()) {
                     case IRON_PICKAXE:
-                        StatisticGUIManager.showStatistics(ServerType.Survival, (Player) e.getWhoClicked(), target);
+                        StatisticGUIManager.showStatistics(ServerType.Survival, p, title.replace(LanguageManager.getMessage("statistics.title"), ""));
                         return;
                     case GRASS_BLOCK:
-                        StatisticGUIManager.showStatistics(ServerType.SkyBlock, (Player) e.getWhoClicked(), target);
+                        //StatisticGUIManager.showStatistics(ServerType.SkyBlock, p, title.replace(LanguageManager.getMessage("statistics.title"), ""));
+                        return;
+                    case IRON_SWORD:
+                        //StatisticGUIManager.showStatistics(ServerType.PvP, p, title.replace(LanguageManager.getMessage("statistics.title"), ""));
+                        return;
+                    case CRAFTING_TABLE:
+                        //StatisticGUIManager.showStatistics(ServerType.HNS, p, title.replace(LanguageManager.getMessage("statistics.title"), ""));
                 }
             }
         } else if (title.contains(LanguageManager.getMessage("kits-title"))) {
             e.setCancelled(true);
+            if(e.getClickedInventory().getType() == InventoryType.PLAYER){
+                return;
+            }
 
             final Player p = (Player) e.getWhoClicked();
             final Inventory inv = e.getClickedInventory();

@@ -84,23 +84,25 @@ statistics:
     none: "§ebrak"
   blocks: "§6Wykopane bloki §e»§e"
   level: "§6Poziom §e» §e"
-  money: "§6Smocze jaja §e» §e"
   timeplayed: "§6Czas gry §e»"
-  punishments:
-    title: "§6Kary §e»"
-    title-none: "§6Kary §e» §abrak"
-    bans: "§6Bany §e»"
-    warns: "§6Ostrzeżenia §e»"
-    mutes: "§6Wyciszenia §e»"
-    color: "§c"
   kills: "§6Zabójstwa §e»"
   deaths: "§6Śmierci §e»"
   kdr: "§6Stosunek Z/ś §e»"
   since: "§6Gra od §e»"
+  money: "§6Smocze monety §e» §e"
+  ranking: "§6Ranking §e»"
+  assists: "§6Asysty §e»"
+  killstreak: "§6Maks. seria zabójstw §e»"
   plugin_version: "§e§lDragon§6§lCraft§b§lCore&e"
   server:
     skyblock: "§6SkyBlock &eII"
     survival: "§6Survival §eVII"
+    pvp: "&c?"
+    hns: "&c?"
+migratehomes:
+  usage: "§cUżycie: §e/migrujhome starynick nowynick§c."
+  success: "§aPrzeniesiono home z konta §e{from}§a na konto §e{to}§a."
+  error: "§cNie znaleziono użytkownika."
 staffchat:
   enabled: "§aWłączono czat."
   disabled: "§cWyłączono czat."
@@ -186,25 +188,10 @@ help:
 pluginhelp:
   contents:
     - "§e» §6/dcc przeladuj§3 - przeładowuje config"
-    - "§e» §6/dcc afk§3 - wyświetla konfigurację wyrzucania za AFK"
     - "§e» §6/dcc anvil§3 - tworzy/usuwa niezniszczalne kowadło z kowadła, na które patrzysz"
-    - "§e» §6/dcc block komenda [<wiadomość>]§3 - blokuje komendę"
-    - "§e» §6/dcc unblock komenda§3 - odblokowuje komendę"
-    - "§e» §6/dcccast§3 - wyświetla ogłoszenie na publicznym czacie"
     - "§e» §6/pomoc§3 - wyświetla pomoc"
     - "§e» §6/sklepbroadcast§3 - ogłasza zakup ze sklepu"
     - "§e» §6/sklepbroadcastdonate§3 - ogłasza donate"
-    - "§e» §6/cc§3 - czyści czat"
-    - "§e» §6/losuj§3 - losuje"
-    - "§e» §6/reload60§3 - przeładowuje serwer za minutę"
-    - "§e» §6/restart60§3 - restartuje serwer za minutę"
-    - "§e» §6/stop60§3 - zatrzymuje serwer za minutę"
-    - "§e» §6/przerwa60§3 - rozpoczyna przerwę techniczną za minutę"
-    - "§e» §6/mc§3 - przełącza §a§lMod§2§lChat"
-    - "§e» §6/ac§3 - przełącza §c§lAdmin§4§lChat"
-    - "§e» §6/stream§3 - przełącza tryb streamu"
-    - "§e» §6/czat§3 - przełącza czat"
-    - "§e» §6/alias§3 - zarządza aliasami komend"
   afk:
     title: "§e» §a§lKonfiguracja §2§lAFK"
     kick_msg: "§e» §3Wiadomość przy wyrzuceniu §e»"
@@ -257,28 +244,6 @@ ranks:
     - '&e» &3Dostęp do strefy &bEVIP'
     - '&e» &3/kit &bEVIP'
     - '&e» &3Zakup rangę już dziś na &bDCRFT.PL'
-broadcast:
-  - '&6Wszelkie informacje znajdują się na &e/info&6 i &e/pomoc&6.'
-  - '&6Discord &e&lDragon&6&lCraft&6: &ehttps://discord.gg/7pPNbUU&6. Więcej pod &e/discord&6.'
-  - '&6Chcesz połączyć swoje konto na serwerze z kontem Discord &e&lDragon&6&lCraft&6?
-  Dowiedz się więcej pod &e/discord&6.'
-  - '&6Witamy na &e&lDragon&6&lCraft &eSurvival VI&6!'
-  - '&6Zmieniasz nick i chcesz przenieść rangę na nowe konto? Użyj &e/przeniesrange&6!'
-  - '&eSmocze jaja&6 zakupisz na &eDCRFT.PL &6i &e/sklep&6. &6Mogą one też wypaść z
-  &eagresywnych mobów&6.'
-  - '&6Strefę &b&lVIP&6 znajdziesz pod /&bvip&6, &5&lSVIP&6 pod /&5svip&6, &9&lMVIP&6
-  pod /&9mvip&6, a &6&lEVIP&6 pod /&6evip&6.'
-  - '&6Rangę &b&lVIP&6 zakupisz również na /spawn, a rangę &e+&6 na /&bvip&6, /&5svip&6,
-  /&9mvip&6 i /&6evip&6.'
-  - '&6Długość rangi &e+ &6sprawdzisz za pomocą &e/+&6.'
-  - '&6Serwer zmienisz za pomocą &e/serwer&6.'
-  - '&6Jeśli potrzebujesz &epomocy&6 nieznajdującej się pod &e/pomoc&6, utwórz zgłoszenie na naszym serwerze &eDiscord&6.'
-  - '&6Wszelkie problemy zgłaszaj administracji na serwerze &eDiscord &6bądź poprzez
-  &e/zglos&6.'
-  - '&6Gracza łamiącego regulamin zgłosisz na naszym serwerze &eDiscord &6lub poprzez &e/zglos&6.'
-  - '&6Polub naszego &eFacebooka&6: &ehttp://fb.com/dcrft.pl&6.'
-  - '&6Polub nas na &ehttps://www.topkamc.pl/server/grOWQQqb&6.'
-  - '&6Obserwuj nas na &eInstagramie&6: &e@dcrft.pl&6.'
 afk:
   kick_msg: "§cZostałeś wyrzucony za bycie nieaktywnym dłużej niż 15 minut."
   kick_warn_msg: "§cHej! Za chwilę zostaniesz wyrzucony za zbyt długą nieaktywność."
@@ -311,19 +276,6 @@ maintenance:
   maintenance:
     in_progress: "§cTrwa przerwa techniczna..."
     broadcast: "§cZa {0} odbędzie się przerwa techniczna."
-randomizer:
-  broadcast: '&3Losuję...'
-  list:
-    - '&fbiały'
-    - '&6pomarańczowy'
-    - '&2zielony'
-    - '&eżółty'
-    - '&dróżowy'
-    - '&8czarny'
-    - '&4czerwony'
-    - '&1niebieski'
-    - '&3morski'
-  randomized: '&aWylosowany kolor to: '
 shopbroadcast:
   title: '&6Sklep'
   purchase: "&e» &3Gracz &b{0}&3 zakupił &b{1}&3!"

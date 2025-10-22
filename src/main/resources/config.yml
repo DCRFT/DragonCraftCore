@@ -12,10 +12,13 @@
 server:
   name: "s16"
   type: survival
-redchat:
-- W?a?ciciel
-greenchat:
-- Moderator
+chatformat:
+  w?a?ciciel: "§c"
+  admin: "§c"
+  viceadministrator: "§e"
+  pomocnik: "§a"
+  moderator: "§a"
+  opiekun: "§d"
 filters:
   kurwa: (ಠ益ಠ)
   <3: ❤

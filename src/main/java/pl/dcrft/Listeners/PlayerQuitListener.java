@@ -24,25 +24,19 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(final PlayerQuitEvent event) {
 
+        DatabaseManager databaseManager = new DatabaseManager();
+
         Player p = event.getPlayer();
+
+        if(p.hasPermission("dcc.login.admin")) return;
 
         if (!event.getPlayer().hasPermission("panel.adm")) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy 'o' HH:mm");
             LocalDateTime now = LocalDateTime.now();
-            ConfigManager.getDataFile().set("players." + p.getName() + ".online", dtf.format(now));
-            ConfigManager.saveData();
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                DatabaseManager.openConnection();
-                Statement statement;
-                try {
-                    statement = DatabaseManager.connection.createStatement();
-                    String update = PlaceholderAPI.setPlaceholders(event.getPlayer(), "UPDATE " + DatabaseManager.table_bungee + " SET online='"+ dtf.format(now) + "' WHERE nick = '" + event.getPlayer().getName() + "'");
-                    statement.executeUpdate(update);
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    ErrorUtil.logError(ErrorReason.DATABASE);
-                }
+
+                String update = PlaceholderAPI.setPlaceholders(event.getPlayer(), "UPDATE " + DatabaseManager.table_bungee + " SET online='"+ dtf.format(now) + "' WHERE nick = '" + event.getPlayer().getName() + "'");
+                databaseManager.update(update);
             });
         }
     }

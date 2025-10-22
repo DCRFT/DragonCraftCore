@@ -25,7 +25,6 @@ public class ConfigUtil {
         ConfigManager.createMessagesFile();
         ConfigManager.createCustomConfig();
         ConfigManager.createDataFile();
-        ConfigManager.createDisabledFile();
         LanguageManager.load();
     }
 
@@ -36,8 +35,5 @@ public class ConfigUtil {
         ConfigManager.data = YamlConfiguration.loadConfiguration(ConfigManager.dataFile);
         ConfigManager.databaseConfig = YamlConfiguration.loadConfiguration(ConfigManager.databaseConfigFile);
         ConfigManager.messagesConfig = YamlConfiguration.loadConfiguration(ConfigManager.messagesConfigFile);
-        ConfigManager.disabledConfig = YamlConfiguration.loadConfiguration(ConfigManager.disabledConfigFile);
-
-        plugin.filters = plugin.getConfig().getConfigurationSection("filters").getValues(true);
     }
 }

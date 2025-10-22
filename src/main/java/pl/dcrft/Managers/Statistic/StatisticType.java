@@ -17,6 +17,21 @@ public enum StatisticType {
     SKYBLOCK_TIMEPLAYED,
     SKYBLOCK_MARRY,
 
+    PVP_KILLS,
+    PVP_DEATHS,
+    PVP_ASSISTS,
+    PVP_KDR,
+    PVP_RANKING,
+    PVP_LEVEL,
+    PVP_KASA,
+    PVP_KILLSTREAK,
+    PVP_TIMEPLAYED,
+
+    HNS_KILLS,
+    HNS_DEATHS,
+    HNS_KASA,
+    HNS_TIMEPLAYED,
+
 
     RANK,
     SINCE,

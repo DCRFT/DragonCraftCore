@@ -1,12 +1,15 @@
 package pl.dcrft.Managers;
 
-import org.bukkit.scheduler.BukkitRunnable;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import org.bukkit.Bukkit;
 import pl.dcrft.DragonCraftCore;
 import pl.dcrft.Utils.ErrorUtils.ErrorReason;
 import pl.dcrft.Utils.ErrorUtils.ErrorUtil;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -21,50 +24,118 @@ public class DatabaseManager {
     public static final int port = ConfigManager.getDatabaseFile().getInt("port");
     public static final String table_survival = ConfigManager.getDatabaseFile().getString("table_survival");
     public static final String table_skyblock = ConfigManager.getDatabaseFile().getString("table_skyblock");
+    public static final String table_pvp = ConfigManager.getDatabaseFile().getString("table_pvp");
+    public static final String table_hns = ConfigManager.getDatabaseFile().getString("table_hns");
 
     public static final String table_bungee = ConfigManager.getDatabaseFile().getString("table_bungee");
-    public static final String properties = ConfigManager.getDatabaseFile().getString("properties");
+    private static final String properties = ConfigManager.getDatabaseFile().getString("properties");
 
-    public static String table = null;
+    private static HikariDataSource dataSource;
 
 
-    public static boolean openConnection() {
-                try {
-                    if (connection == null || connection.isClosed()) {
-                        synchronized(plugin) {
-                                Class.forName("com.mysql.jdbc.Driver");
-                                connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + properties, username, password);
-                                
-                            switch (plugin.getConfig().getString("server.type")) {
-                                case "survival" -> table = table_survival;
-                                case "skyblock" -> table = table_skyblock;
-                            }
-                        return true;
-                        }
-                    }
-                    return true;
-                } catch (SQLException | ClassNotFoundException e) {
-                    ErrorUtil.logError(ErrorReason.DATABASE);
-                    e.printStackTrace();
-                    return false;
-                }
-            }
+
+    static String getJdbcUrl(String host, int port, String database) {
+        return "jdbc:mysql://" + host + ":" + port + "/" + database;
+    }
+
+    public static void initializeDataSource() {
+
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(getJdbcUrl(host, port, database));
+        config.setUsername(username);
+        config.setPassword(password);
+
+        // See: https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.addDataSourceProperty("useServerPrepStmts", "true");
+        config.addDataSourceProperty("useLocalSessionState", "true");
+        config.addDataSourceProperty("rewriteBatchedStatements", "true");
+        config.addDataSourceProperty("cacheResultSetMetadata", "true");
+        config.addDataSourceProperty("cacheServerConfiguration", "true");
+        config.addDataSourceProperty("elideSetAutoCommits", "true");
+        config.addDataSourceProperty("maintainTimeStats", "false");
+        config.addDataSourceProperty("useSSL", "false");
+        config.addDataSourceProperty("characterEncoding", "utf8");
+        config.addDataSourceProperty("encoding", "UTF-8");
+        config.addDataSourceProperty("useUnicode", "true");
+        config.addDataSourceProperty("verifyServerCertificate", "false");
+        config.setMaxLifetime(30000);
+        config.setMaximumPoolSize(1);
+
+
+        dataSource = new HikariDataSource(config);
+
+            Bukkit.getLogger().warning(dataSource.getDataSourceProperties().toString());
+    }
 
     public static void closeConnection() {
-        BukkitRunnable runnable = new BukkitRunnable() {
-            public void run() {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    ErrorUtil.logError(ErrorReason.DATABASE);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            ErrorUtil.logError(ErrorReason.DATABASE);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private boolean checkConnection() {
+        try {
+            return connection != null && !connection.isClosed();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                if(dataSource == null) {
+                    Bukkit.getLogger().warning("DataSource is null! Initializing...");
+                    initializeDataSource();
+                    connection = dataSource.getConnection();
+                } else {
+                    connection = dataSource.getConnection();
                 }
-
             }
-        };
-        runnable.runTaskAsynchronously(plugin);
+        } catch (SQLException e) {
+            ErrorUtil.logError(ErrorReason.DATABASE);
+            throw new RuntimeException(e);
+        }
+        return connection;
+    }
 
-
+    public int update(String update) {
+        if (!checkConnection()) {
+            connection = getConnection();
+        }
+        try (PreparedStatement statement = connection.prepareStatement(update)) {
+            int result = statement.executeUpdate();
+            statement.close();
+            connection.close();
+            return result;
+        } catch (SQLException e) {
+            ErrorUtil.logError(ErrorReason.DATABASE);
+            throw new RuntimeException(e);
+        }
 
     }
+
+    public ResultSet query(String query) {
+        if (!checkConnection()) {
+            connection = getConnection();
+        }
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet result = statement.executeQuery();
+            statement.close();
+            connection.close();
+            return result;
+        } catch (SQLException e) {
+            ErrorUtil.logError(ErrorReason.DATABASE);
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 }

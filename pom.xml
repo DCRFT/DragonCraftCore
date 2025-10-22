@@ -61,17 +61,22 @@
 
     <dependencies>
         <dependency>
-            <groupId>me.filoghost.holographicdisplays</groupId>
-            <artifactId>holographicdisplays-api</artifactId>
-            <version>3.0.0</version>
-            <scope>provided</scope>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.bgsoftware</groupId>
             <artifactId>SuperiorSkyblockAPI</artifactId>
-            <version>2022.9</version>
+            <version>2023.2</version>
             <scope>provided</scope>
         </dependency>
+            <dependency>
+                <groupId>com.github.decentsoftware-eu</groupId>
+                <artifactId>decentholograms</artifactId>
+                <version>2.8.3</version>
+                <scope>provided</scope>
+            </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -109,7 +114,7 @@
         <dependency>
             <groupId>com.github.LeonMangler</groupId>
             <artifactId>SuperVanish</artifactId>
-            <version>6.2.12</version>
+            <version>6.2.17</version>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
@@ -183,7 +188,27 @@
                     <target>16</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <artifactSet>
+                                <includes>
+                                    <exclude>com.zaxxer:HikariCP</exclude>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
 </project>
