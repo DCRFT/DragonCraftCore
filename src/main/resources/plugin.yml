@@ -23,8 +23,6 @@ commands:
   evip:
     description: Alias do /warp evip lub pokazanie możliwości EVIPa w zależności od rangi.
     usage: /evip
-  gracz:
-    description: Wyświetl statystyki gracza.
   slub:
     description: slub
   sakceptuj:

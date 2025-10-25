@@ -19,8 +19,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import pl.dcrft.DragonCraftCore;
-import pl.dcrft.Managers.Statistic.ServerType;
-import pl.dcrft.Managers.Statistic.StatisticGUIManager;
 import pl.dcrft.Utils.ConfigUtil;
 import pl.dcrft.Utils.GroupUtil;
 
@@ -325,23 +323,7 @@ public class CommandManager implements CommandExecutor {
                 }
             }
             return true;
-        } else if (cmd.getName().equalsIgnoreCase("gracz")) {
-            if (!(sender instanceof Player)) {
-                MessageManager.sendPrefixedMessage(sender, "console_error");
-            } else {
-                Player p = (Player) sender;
-                if (args.length == 0) {
-                    p.chat("/gracz " + p.getName());
-                } else if (plugin.getConfig().getStringList("staff").contains(args[0])) {
-                    MessageManager.sendPrefixedMessage(sender, "wrong_player_nickname");
-                } else if(plugin.getConfig().getString("server.type").equalsIgnoreCase("survival")){
-                    StatisticGUIManager.showStatistics(ServerType.Survival, p, args[0]);
-                } else if(plugin.getConfig().getString("server.type").equalsIgnoreCase("skyblock")){
-                    StatisticGUIManager.showStatistics(ServerType.SkyBlock, p, args[0]);
-                }
-            }
-            return false;
-        }  else if (cmd.getName().equalsIgnoreCase("+")) {
+        } else if (cmd.getName().equalsIgnoreCase("+")) {
             if (!sender.hasPermission(plugin.getConfig().getString("timedpermission"))) {
                 MessageManager.sendPrefixedMessage(sender, "timedpermission.no_permission");
             } else {
