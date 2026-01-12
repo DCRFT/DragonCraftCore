@@ -196,7 +196,7 @@ public class CommandManager implements CommandExecutor {
             if (grupa) {
                 p.chat(plugin.getConfig().getString("commands.vip"));
             } else {
-                MessageManager.sendMessageList(p, "ranks.vip");
+                p.chat("/rangi");
             }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("svip")) {
@@ -205,7 +205,7 @@ public class CommandManager implements CommandExecutor {
             if (grupa) {
                 p.chat(plugin.getConfig().getString("commands.svip"));
             } else {
-                MessageManager.sendMessageList(p, "ranks.svip");
+                p.chat("/rangi");
             }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("mvip")) {
@@ -214,7 +214,7 @@ public class CommandManager implements CommandExecutor {
             if (grupa) {
                 p.chat(plugin.getConfig().getString("commands.mvip"));
             } else {
-                MessageManager.sendMessageList(p, "ranks.mvip");
+                p.chat("/rangi");
             }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("evip")) {
@@ -223,7 +223,7 @@ public class CommandManager implements CommandExecutor {
             if (grupa) {
                 p.chat(plugin.getConfig().getString("commands.evip"));
             } else {
-                MessageManager.sendMessageList(p, "ranks.evip");
+                p.chat("/rangi");
             }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("dcc")) {
