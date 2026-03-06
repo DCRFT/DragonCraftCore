@@ -138,7 +138,7 @@ public class CommandManager implements CommandExecutor {
                             String z = String.valueOf(loc.getZ());
                             Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),
                                     "summon firework_rocket " + x + " " + y + " " + z + " {LifeTime:30,FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Flight:1,Explosions:[{Type:1,Flicker:1,Trail:1,Colors:[I;1973019,11743532,3887386,5320730,2437522,8073150,2651799,11250603,4408131,14188952,4312372,14602026,6719955,12801229,15435844,15790320],FadeColors:[I;1973019,11743532,3887386,5320730,2437522,8073150,2651799,11250603,4408131,14188952,4312372,14602026,6719955,12801229,15435844,15790320]}]}}}}");
-                            } catch (WarpNotFoundException | InvalidWorldException e) {
+                            } catch (WarpNotFoundException e) {
                             throw new RuntimeException(e);
                         }
                     }

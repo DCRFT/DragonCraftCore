@@ -18,9 +18,8 @@ public class KitsManager {
     public static String[] getKits(Player p) throws Exception {
         User user = es.getUser(p);
         Kits kits = es.getKits();
-        String input = kits.listKits(es, user);
-        String[] kitsList = input.split(" ");
-        return kitsList;
+        String input = kits.listKits(es, user).replaceAll("<strikethrough>", "");
+        return input.split(" ");
     }
     public static void openGui(Player p) {
         try {
